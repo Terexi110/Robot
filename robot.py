@@ -46,11 +46,11 @@ class Program():
             if (self.x != 0):
                 # зажать/расжать
                 # запускаем парралельный поток, что бы всё время работал сервопривод
-                brick.motor("S1").setPower(self.lastx - self.x)
+                brick.motor("S1").setPower(self.x)
                 # threading.Thread(target=self.control_motor_S1, args=(self.x)).start()
             else:
                 # вверх/вниз
-                brick.motor("S2").setPower(-(self.y + self.lasty) - 20)
+                brick.motor("S2").setPower(-(self.y + self.lasty) - 90)
 
             # запоминаем прошлое положение
             self.lastx = self.x

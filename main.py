@@ -26,7 +26,7 @@ def generate_frames():
 
             # Добавляем красную линию (20% от верхнего края)
             height, width = frame.shape[:2]
-            line_y = int(height * 0.2)
+            line_y = int(height * 0.8)
             cv2.line(frame, (0, line_y), (width, line_y), (0, 0, 255), 2)
 
             # Кодируем обратно в JPEG
