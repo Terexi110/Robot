@@ -57,7 +57,7 @@ class Program():
             self.lasty = self.y
 
         else:
-            # brick.motor("S1").powerOff()
+            brick.motor("S1").powerOff()
             brick.motor("S2").powerOff()
 
         script.wait(10)
@@ -89,6 +89,10 @@ class Program():
             # отключаем сервопривод, отвечающий за зажатие
             if (gamepad.buttonWasPressed(3)):
                 brick.motor("S1").powerOff()
+            
+            # отключаем сервопривод, отвечающий за зажатие
+            if (gamepad.buttonWasPressed(4)):
+                brick.motor("S2").powerOff()
 
             # получаем флаг для выбора режика
             # если кнопка 1 нажата - режим манипулятора

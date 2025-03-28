@@ -4,15 +4,16 @@ import requests
 import numpy as np
 
 app = Flask(__name__)
-STREAM_URL = 'http://192.168.184.173:8080/?action=stream'
+STREAM_URL = 'http://192.168.77.1:8080/?action=stream'
 
 # Загрузка модели YOLOv4-tiny
-net = cv2.dnn.readNet("yolov4-tiny.weights", "yolov4-tiny.cfg")
+net = cv2.dnn.readNet("yolo_model/yolov4-tiny.weights",
+                     "yolo_model/yolov4-tiny.cfg")
 classes = []
-with open("coco.names", "r") as f:
+with open("yolo_model/coco.names", "r") as f:
     classes = [line.strip() for line in f.readlines()]
 layer_names = net.getLayerNames()
-output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
+output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers().flatten()]
 
 
 def detect_objects(frame):
@@ -86,7 +87,7 @@ def generate_frames():
 
             # Красная линия
             height, width = frame.shape[:2]
-            line_y = int(height * 0.2)
+            line_y = int(height * 0.8)
             cv2.line(frame, (0, line_y), (width, line_y), (0, 0, 255), 2)
 
             ret, jpeg = cv2.imencode('.jpg', frame)

@@ -4,7 +4,7 @@ import requests
 import numpy as np
 
 app = Flask(__name__)
-STREAM_URL = 'http://192.168.184.173:8080/?action=stream'
+STREAM_URL = 'http://192.168.77.1:8080/?action=stream'
 
 
 def generate_frames():
