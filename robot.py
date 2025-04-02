@@ -26,8 +26,8 @@ class Program():
                 brick.motor("M2").setPower(-self.x)
             elif (self.y != 0):
                 # врепёд/назад
-                brick.motor("M1").setPower(-self.y)
-                brick.motor("M2").setPower(-self.y)
+                brick.motor("M1").setPower(self.y)
+                brick.motor("M2").setPower(self.y)
 
         else:
             brick.motor("M1").powerOff()
@@ -42,20 +42,16 @@ class Program():
             # получаем значения с геймпада
             self.x = [gamepad.padX(2), gamepad.padY(2)][0]
             self.y = [gamepad.padX(2), gamepad.padY(2)][1]
-
-            if (self.x != 0):
-                # зажать/расжать
-                # запускаем парралельный поток, что бы всё время работал сервопривод
-                brick.motor("S1").setPower(self.x)
-                # threading.Thread(target=self.control_motor_S1, args=(self.x)).start()
-            else:
-                # вверх/вниз
-                brick.motor("S2").setPower(-(self.y + self.lasty) - 90)
-
-            # запоминаем прошлое положение
-            self.lastx = self.x
-            self.lasty = self.y
-
+            
+            if self.x == 100:
+                brick.motor("S2").setPower(-90)
+            elif self.x == -100:
+                brick.motor("S2").setPower(20)
+            if self.y == 100: 
+                brick.motor("S1").setPower(-90)
+            elif self.y == -100:
+                brick.motor("S1").setPower(10)
+                
         else:
             brick.motor("S1").powerOff()
             brick.motor("S2").powerOff()
@@ -88,11 +84,11 @@ class Program():
 
             # отключаем сервопривод, отвечающий за зажатие
             if (gamepad.buttonWasPressed(3)):
-                brick.motor("S1").powerOff()
+                brick.motor("S2").powerOff()
             
             # отключаем сервопривод, отвечающий за зажатие
             if (gamepad.buttonWasPressed(4)):
-                brick.motor("S2").powerOff()
+                brick.motor("S1").powerOff()
 
             # получаем флаг для выбора режика
             # если кнопка 1 нажата - режим манипулятора
